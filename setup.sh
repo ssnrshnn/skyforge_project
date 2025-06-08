@@ -161,7 +161,7 @@ create_project_directory() {
 copy_project_files() {
     print_status "Copying project files..."
     
-    local files=("main.py" "a.py" "b.py" "Orbitron-Bold.ttf" "weather-display.service")
+    local files=("system_controller.py" "weather_display.py" "led_controller.py" "Orbitron-Bold.ttf" "weather-display.service")
     local current_dir=$(pwd)
     
     for file in "${files[@]}"; do
@@ -198,7 +198,7 @@ setup_systemd_service() {
     # Update service file with correct paths and user
     sed -i "s|User=pi|User=$CURRENT_USER|g" "$PROJECT_DIR/weather-display.service"
     sed -i "s|WorkingDirectory=/home/pi|WorkingDirectory=$PROJECT_DIR|g" "$PROJECT_DIR/weather-display.service"
-    sed -i "s|ExecStart=/usr/bin/python3 /home/pi/main.py|ExecStart=/usr/bin/python3 $PROJECT_DIR/main.py|g" "$PROJECT_DIR/weather-display.service"
+    sed -i "s|ExecStart=/usr/bin/python3 /home/pi/system_controller.py|ExecStart=/usr/bin/python3 $PROJECT_DIR/system_controller.py|g" "$PROJECT_DIR/weather-display.service"
     
     # Copy service file and enable it
     sudo cp "$PROJECT_DIR/weather-display.service" "/etc/systemd/system/"
@@ -222,7 +222,7 @@ setup_api_key() {
         read -p "Please enter your OpenWeatherMap API key: " api_key
         
         if [[ -n "$api_key" && "$api_key" != "YOUR_API_KEY_HERE" ]]; then
-            sed -i "s/WEATHER_API_KEY = \"YOUR_API_KEY_HERE\"/WEATHER_API_KEY = \"$api_key\"/" "$PROJECT_DIR/a.py"
+            sed -i "s/WEATHER_API_KEY = \"YOUR_API_KEY_HERE\"/WEATHER_API_KEY = \"$api_key\"/" "$PROJECT_DIR/weather_display.py"
             print_success "API key configured successfully"
             break
         else
@@ -233,7 +233,7 @@ setup_api_key() {
             echo
             if [[ $REPLY =~ ^[Yy]$ ]]; then
                 print_warning "API key not set. The weather display will not work until you manually"
-                print_warning "edit $PROJECT_DIR/a.py and replace YOUR_API_KEY_HERE with your actual API key"
+                print_warning "edit $PROJECT_DIR/weather_display.py and replace YOUR_API_KEY_HERE with your actual API key"
                 break
             fi
         fi

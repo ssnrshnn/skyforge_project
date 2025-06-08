@@ -100,7 +100,7 @@ chmod +x setup.sh && ./setup.sh
 
 2. **Configure the API key:**
    - **Automated setup:** You'll be prompted during `./setup.sh`
-   - **Manual setup:** Edit `a.py` and replace `YOUR_API_KEY_HERE`:
+   - **Manual setup:** Edit `weather_display.py` and replace `YOUR_API_KEY_HERE`:
    ```python
    WEATHER_API_KEY = "your_actual_api_key_here"
    ```
@@ -112,13 +112,13 @@ chmod +x setup.sh && ./setup.sh
 <details>
 <summary>🎨 Click to see customization options</summary>
 
-#### Display Settings (`a.py`)
+#### Display Settings (`weather_display.py`)
 - **Update Interval:** Change `time.sleep(60)` for different refresh rates
 - **Font Sizes:** Adjust font size variables for text elements
 - **Colors:** Modify color values in drawing functions
 - **Cache Duration:** Change `CACHE_DURATION` for API call frequency
 
-#### LED Patterns (`b.py`)
+#### LED Patterns (`led_controller.py`)
 - **Blink Timing:** Adjust `time.sleep()` values in main loop
 - **LED Pins:** Change `LED1_PIN` and `LED2_PIN` for different GPIO pins
 - **Blink Pattern:** Modify `blink_twice()` function for custom patterns
@@ -148,22 +148,22 @@ sudo systemctl restart weather-display.service  # Restart
 
 ```bash
 # Run the complete system
-python3 main.py
+python3 system_controller.py
 
 # Run only weather display
-python3 a.py
+python3 weather_display.py
 
 # Run only LED control
-python3 b.py
+python3 led_controller.py
 ```
 
 ### 📁 File Structure
 
 ```
 📦 raspberry-pi-weather-display/
-├── 🐍 main.py                 # Main controller with process management
-├── 🌤️ a.py                    # Weather display functionality
-├── 💡 b.py                    # LED control functionality
+├── 🎛️ system_controller.py    # Main system controller with process management
+├── 🌤️ weather_display.py      # Weather display functionality
+├── 💡 led_controller.py       # LED control functionality
 ├── 🔤 Orbitron-Bold.ttf       # Custom font file
 ├── ⚙️ weather-display.service # Systemd service configuration
 ├── 🚀 setup.sh               # Automated installation script
@@ -193,7 +193,7 @@ python3 b.py
 - ✅ Verify GPIO pin connections
 - ✅ Check resistor values (220Ω)
 - ✅ Ensure proper LED polarity (long leg = positive)
-- ✅ Test manually: `python3 b.py`
+- ✅ Test manually: `python3 led_controller.py`
 
 </details>
 

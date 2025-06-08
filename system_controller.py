@@ -79,17 +79,17 @@ def run_script_with_restart(script_name, max_restarts=5):
     if restart_count >= max_restarts:
         logger.critical(f"{script_name} failed {max_restarts} times, giving up")
 
-def run_a_py():
+def run_weather_display():
     """Run weather display script with restart capability"""
-    run_script_with_restart("a.py")
+    run_script_with_restart("weather_display.py")
 
-def run_b_py():
+def run_led_controller():
     """Run LED control script with restart capability"""
-    run_script_with_restart("b.py")
+    run_script_with_restart("led_controller.py")
 
 def check_script_files():
     """Check if required script files exist"""
-    scripts = ["a.py", "b.py"]
+    scripts = ["weather_display.py", "led_controller.py"]
     missing_scripts = []
     
     for script in scripts:
@@ -113,7 +113,7 @@ def monitor_processes():
             if process_a and not process_a.is_alive():
                 exit_code = process_a.exitcode
                 logger.warning(f"Weather display process died (exit code: {exit_code})")
-                process_a = multiprocessing.Process(target=run_a_py)
+                process_a = multiprocessing.Process(target=run_weather_display)
                 process_a.start()
                 logger.info("Weather display process restarted")
             
@@ -121,7 +121,7 @@ def monitor_processes():
             if process_b and not process_b.is_alive():
                 exit_code = process_b.exitcode
                 logger.warning(f"LED control process died (exit code: {exit_code})")
-                process_b = multiprocessing.Process(target=run_b_py)
+                process_b = multiprocessing.Process(target=run_led_controller)
                 process_b.start()
                 logger.info("LED control process restarted")
             
@@ -139,7 +139,7 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
     
-    logger.info("Main Controller starting...")
+    logger.info("System Controller starting...")
     
     # Check if required files exist
     if not check_script_files():
@@ -149,10 +149,10 @@ def main():
     try:
         # Start both processes
         logger.info("Starting weather display process...")
-        process_a = multiprocessing.Process(target=run_a_py, name="WeatherDisplay")
+        process_a = multiprocessing.Process(target=run_weather_display, name="WeatherDisplay")
         
         logger.info("Starting LED control process...")
-        process_b = multiprocessing.Process(target=run_b_py, name="LEDControl")
+        process_b = multiprocessing.Process(target=run_led_controller, name="LEDController")
         
         process_a.start()
         process_b.start()
@@ -168,7 +168,7 @@ def main():
         logger.error(f"Unexpected error in main: {e}")
     finally:
         terminate_processes()
-        logger.info("Main Controller terminated")
+        logger.info("System Controller terminated")
 
 if __name__ == "__main__":
     main()
