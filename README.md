@@ -6,17 +6,9 @@
 
 <div align="center">
 
-### 🎬 System in Action
-![Weather Display Demo](Images/7.mp4)
-
 ### 📱 Display Screenshots
 <img src="Images/2.jpg" alt="Weather Display Screen 1" width="300"/>
 <img src="Images/3.jpg" alt="Weather Display Screen 2" width="300"/>
-
-### 🔧 Hardware Setup
-![Hardware Setup Demo](Images/5.mp4)
-![LED Controller Demo](Images/6.mp4)
-![Complete System Demo](Images/9.mp4)
 
 </div>
 
