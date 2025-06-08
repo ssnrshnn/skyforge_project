@@ -1,178 +1,151 @@
-# Raspberry Pi Weather Display System
+# 🌤️ Raspberry Pi Weather Display System
 
-A comprehensive weather display system for Raspberry Pi featuring a ST7789 TFT display and LED status indicators. The system shows current weather, time, date, location information, and 7-day weather forecast with automatic location detection.
+> A beautiful, real-time weather display for your Raspberry Pi with ST7789 TFT screen and LED indicators
 
-## Quick Start (Automated Installation)
-
-For the easiest installation experience, use the automated setup script:
-
-```bash
-# Download all project files to your Raspberry Pi
-# Make the setup script executable
-chmod +x setup.sh
-
-# Run the automated setup
-./setup.sh
-```
-
-The setup script will automatically:
-- Update your system packages
-- Install all required dependencies
-- Enable SPI interface
-- Configure the systemd service
-- Set up fonts and project files
-- Test hardware connections (optional)
-- Start the weather display service
-
-**That's it!** Your weather display system will be up and running.
+## 📖 Table of Contents
+- [✨ Features](#-features)
+- [🛠️ Hardware Requirements](#️-hardware-requirements)
+- [⚡ Quick Start](#-quick-start)
+- [📋 Detailed Installation](#-detailed-installation)
+- [🔧 Configuration](#-configuration)
+- [🎮 Usage](#-usage)
+- [🔍 Troubleshooting](#-troubleshooting)
+- [🤝 Contributing](#-contributing)
 
 ---
 
-## Manual Installation
+## ✨ Features
 
-If you prefer to install manually or want to understand each step, follow the detailed instructions below.
+🌡️ **Real-time Weather Display** - Current conditions with temperature and weather icons  
+📍 **Auto Location Detection** - Uses IP-based geolocation to find your location  
+📅 **5-Day Weather Forecast** - Weekly weather preview with temperatures and icons  
+🕐 **Time & Date Display** - Current time and date with custom Orbitron font  
+🏳️ **Country Flag Display** - Shows your country's flag next to location info  
+💡 **LED Status Indicators** - Visual status indicators with customizable patterns  
+🔄 **Auto Recovery** - Robust error handling with automatic restart mechanisms  
+⚙️ **System Service** - Runs automatically on boot as a systemd service  
 
-## Features
+---
 
-- **Real-time Weather Display**: Current weather conditions with temperature and weather icons
-- **Automatic Location Detection**: Uses IP-based geolocation to detect your location
-- **5-Day Weather Forecast**: Weekly weather preview with temperatures and icons
-- **Time & Date Display**: Current time and date with custom Orbitron font
-- **Country Flag Display**: Shows your country's flag next to location information
-- **LED Status Indicators**: Visual status indicators with customizable patterns
-- **Robust Error Handling**: Automatic restart and error recovery mechanisms
-- **Systemd Service**: Runs as a system service for automatic startup
+## 🛠️ Hardware Requirements
 
-## Hardware Requirements
+### 📦 Components Needed
+| Component | Description | Quantity |
+|-----------|-------------|----------|
+| 🥧 Raspberry Pi | 3B+ or newer recommended | 1 |
+| 📺 ST7789 Display | 240x320 pixels TFT screen | 1 |
+| 💚 Green LED | 5mm standard LED | 1 |
+| ❤️ Red LED | 5mm standard LED | 1 |
+| 🔌 220Ω Resistors | For LED current limiting | 2 |
+| 🔗 Jumper Wires | Male-to-female recommended | 10+ |
+| 🍞 Breadboard | Half-size (optional) | 1 |
 
-### Components
-- Raspberry Pi (3B+ or newer recommended)
-- ST7789 TFT Display (240x320 pixels)
-- 2x LEDs (Green and Red)
-- 2x 220Ω Resistors
-- Jumper wires
-- Breadboard (optional)
+### 🔌 Pin Connections
 
-### Pin Connections
+#### 📺 ST7789 Display Wiring
+| Display Pin | Raspberry Pi Pin | Description |
+|-------------|------------------|-------------|
+| **VCC** | 3.3V (Pin 1 or 17) | Power supply |
+| **GND** | GND (Pin 6, 9, 14, 20, 25, 30, 34, 39) | Ground |
+| **CS** | GPIO 8 (Pin 24) | SPI Chip Select |
+| **DC** | GPIO 25 (Pin 22) | Data/Command |
+| **RST** | GPIO 24 (Pin 18) | Reset |
+| **SDA** | GPIO 10 (Pin 19) | SPI Data (MOSI) |
+| **SCL** | GPIO 11 (Pin 23) | SPI Clock |
 
-#### ST7789 Display Connections
-| Display Pins | Raspberry Pi Pins                      |
-| ------------ | -------------------------------------- |
-| VCC          | 3.3V (Pin 1 or Pin 17)                 |
-| GND          | GND (Pin 6, 9, 14, 20, 25, 30, 34, 39) |
-| CS           | GPIO 8 (Pin 24 - SPI0_CE0)             |
-| DC           | GPIO 25 (Pin 22)                       |
-| RST          | GPIO 24 (Pin 18)                       |
-| SDA          | GPIO 10 (Pin 19 - SPI0_MOSI)           |
-| SCL          | GPIO 11 (Pin 23 - SPI0_SCLK)           |
+#### 💡 LED Wiring
+| LED | Connection | GPIO Pin |
+|-----|------------|----------|
+| **🟢 Green LED** | Long leg → 220Ω → GPIO 17 (Pin 11)<br>Short leg → GND | GPIO 17 |
+| **🔴 Red LED** | Long leg → 220Ω → GPIO 27 (Pin 13)<br>Short leg → GND | GPIO 27 |
 
-#### LED Connections
+---
 
-**Green LED (Status Indicator):**
-- Long leg (Anode) → 220Ω Resistor → GPIO 17 (Pin 11)
-- Short leg (Cathode) → GND (any available GND pin)
+## ⚡ Quick Start
 
-**Red LED (Status Indicator):**
-- Long leg (Anode) → 220Ω Resistor → GPIO 27 (Pin 13)
-- Short leg (Cathode) → GND (any available GND pin)
+### 🚀 One-Command Installation
 
-## Software Requirements
-
-### System Dependencies
 ```bash
-sudo apt update
-sudo apt upgrade -y
-sudo apt install python3 python3-pip git -y
+# 1. Clone the repository
+git clone https://github.com/ssnrshnn/skyforge_project.git
+cd raspberry-pi-weather-display
+
+# 2. Run automated setup
+chmod +x setup.sh && ./setup.sh
 ```
 
-### Python Dependencies
-```bash
-pip3 install requests pillow adafruit-circuitpython-rgb-display RPi.GPIO
-```
+### ✅ What the Setup Script Does
+- ✅ Updates your Raspberry Pi system
+- ✅ Installs all required dependencies
+- ✅ Enables SPI interface automatically
+- ✅ Configures systemd service
+- ✅ Sets up fonts and project files
+- ✅ Tests hardware connections (optional)
+- ✅ Starts the weather display service
 
-### Enable SPI Interface
-```bash
-sudo raspi-config
-# Navigate to: Interfacing Options → SPI → Enable
-# Reboot after enabling
-sudo reboot
-```
+**🎉 That's it! Your weather display will be running automatically.**
 
-## Installation
+---
 
-1. **Clone or download the project files to your Raspberry Pi:**
-   ```bash
-   cd /home/pi
-   # Copy all project files (main.py, a.py, b.py, Orbitron-Bold.ttf, weather-display.service)
-   ```
+## 🔧 Configuration
 
-2. **Install the Orbitron font:**
-   ```bash
-   sudo mkdir -p /usr/share/fonts/truetype/
-   sudo cp Orbitron-Bold.ttf /usr/share/fonts/truetype/
-   sudo fc-cache -fv
-   ```
+### 🌤️ Weather API Setup
 
-3. **Set up the systemd service:**
-   ```bash
-   sudo cp weather-display.service /etc/systemd/system/
-   sudo systemctl daemon-reload
-   sudo systemctl enable weather-display.service
-   ```
-
-4. **Start the service:**
-   ```bash
-   sudo systemctl start weather-display.service
-   ```
-
-## Configuration
-
-### Weather API Setup
-This project requires a free OpenWeatherMap API key to function properly.
+> **🔑 Required:** This project needs a free OpenWeatherMap API key
 
 1. **Get your free API key:**
-   - Visit [OpenWeatherMap API](https://openweathermap.org/api)
-   - Sign up for a free account
-   - Generate your API key (free tier allows 1000 calls/day)
+   - 🌐 Visit [OpenWeatherMap API](https://openweathermap.org/api)
+   - 📝 Sign up for a free account
+   - 🔑 Generate your API key (free tier: 1000 calls/day)
 
 2. **Configure the API key:**
-   - If using the automated setup script, you'll be prompted to enter your API key
-   - For manual setup, replace `YOUR_API_KEY_HERE` in `a.py`:
+   - **Automated setup:** You'll be prompted during `./setup.sh`
+   - **Manual setup:** Edit `a.py` and replace `YOUR_API_KEY_HERE`:
    ```python
    WEATHER_API_KEY = "your_actual_api_key_here"
    ```
 
-**Note:** The weather display will not work without a valid API key.
+> ⚠️ **Important:** The weather display won't work without a valid API key
 
-### Customization Options
+### ⚙️ Customization Options
 
-#### Display Settings (a.py)
-- **Update Interval**: Modify `time.sleep(60)` to change refresh rate
-- **Font Sizes**: Adjust font size variables for different text elements
-- **Colors**: Change color values in the drawing functions
-- **Cache Duration**: Modify `CACHE_DURATION` for API call frequency
+<details>
+<summary>🎨 Click to see customization options</summary>
 
-#### LED Patterns (b.py)
-- **Blink Timing**: Adjust `time.sleep()` values in the main loop
-- **LED Pins**: Change `LED1_PIN` and `LED2_PIN` for different GPIO pins
-- **Blink Pattern**: Modify the `blink_twice()` function for custom patterns
+#### Display Settings (`a.py`)
+- **Update Interval:** Change `time.sleep(60)` for different refresh rates
+- **Font Sizes:** Adjust font size variables for text elements
+- **Colors:** Modify color values in drawing functions
+- **Cache Duration:** Change `CACHE_DURATION` for API call frequency
 
-## File Structure
+#### LED Patterns (`b.py`)
+- **Blink Timing:** Adjust `time.sleep()` values in main loop
+- **LED Pins:** Change `LED1_PIN` and `LED2_PIN` for different GPIO pins
+- **Blink Pattern:** Modify `blink_twice()` function for custom patterns
 
+</details>
+
+---
+
+## 🎮 Usage
+
+### 🖥️ Service Management
+
+```bash
+# Check service status
+sudo systemctl status weather-display.service
+
+# View real-time logs
+sudo journalctl -u weather-display.service -f
+
+# Control the service
+sudo systemctl start weather-display.service    # Start
+sudo systemctl stop weather-display.service     # Stop
+sudo systemctl restart weather-display.service  # Restart
 ```
-├── main.py                 # Main controller with process management
-├── a.py                    # Weather display functionality
-├── b.py                    # LED control functionality
-├── Orbitron-Bold.ttf       # Custom font file
-├── weather-display.service # Systemd service configuration
-├── setup.sh               # Automated installation script
-├── .gitignore             # Git ignore file for security
-└── README.md              # This file
-```
 
-## Usage
+### 🔧 Manual Operation
 
-### Manual Operation
 ```bash
 # Run the complete system
 python3 main.py
@@ -184,81 +157,136 @@ python3 a.py
 python3 b.py
 ```
 
-### Service Management
+### 📁 File Structure
+
+```
+📦 raspberry-pi-weather-display/
+├── 🐍 main.py                 # Main controller with process management
+├── 🌤️ a.py                    # Weather display functionality
+├── 💡 b.py                    # LED control functionality
+├── 🔤 Orbitron-Bold.ttf       # Custom font file
+├── ⚙️ weather-display.service # Systemd service configuration
+├── 🚀 setup.sh               # Automated installation script
+├── 🛡️ .gitignore             # Git ignore file for security
+└── 📖 README.md              # This file
+```
+
+---
+
+## 🔍 Troubleshooting
+
+### ❌ Common Issues
+
+<details>
+<summary>📺 Display not working</summary>
+
+- ✅ Check SPI is enabled: `lsmod | grep spi`
+- ✅ Verify wiring connections
+- ✅ Ensure 3.3V power (not 5V!)
+- ✅ Test with: `sudo systemctl status weather-display.service`
+
+</details>
+
+<details>
+<summary>💡 LEDs not blinking</summary>
+
+- ✅ Verify GPIO pin connections
+- ✅ Check resistor values (220Ω)
+- ✅ Ensure proper LED polarity (long leg = positive)
+- ✅ Test manually: `python3 b.py`
+
+</details>
+
+<details>
+<summary>🌐 Weather data not loading</summary>
+
+- ✅ Check internet connection
+- ✅ Verify API key validity
+- ✅ Check firewall settings
+- ✅ Test API key: `curl "http://api.openweathermap.org/data/2.5/weather?q=London&appid=YOUR_API_KEY"`
+
+</details>
+
+<details>
+<summary>🔤 Font not loading</summary>
+
+- ✅ Ensure font file is in `/usr/share/fonts/truetype/`
+- ✅ Run `sudo fc-cache -fv` to refresh font cache
+- ✅ Check file permissions
+
+</details>
+
+### 📊 Performance Info
+
+| Metric | Value |
+|--------|-------|
+| 💾 Memory Usage | ~50-100MB RAM |
+| 🖥️ CPU Usage | <5% on Pi 4 |
+| 🌐 Network Usage | ~1MB/hour |
+| 🔄 Update Frequency | Every 60 seconds |
+
+### 📝 Log Files
+
 ```bash
-# Check service status
-sudo systemctl status weather-display.service
+# System logs
+sudo journalctl -u weather-display.service
 
-# Stop the service
-sudo systemctl stop weather-display.service
-
-# Restart the service
-sudo systemctl restart weather-display.service
-
-# View logs
+# Real-time monitoring
 sudo journalctl -u weather-display.service -f
 ```
 
-## Troubleshooting
+---
 
-### Common Issues
+## 🔒 Security Notes
 
-1. **Display not working:**
-   - Check SPI is enabled: `lsmod | grep spi`
-   - Verify wiring connections
-   - Check power supply (3.3V, not 5V)
+- 🔐 **Never commit API keys** to version control
+- 🤐 **Keep your API key private** - don't share it publicly
+- 🌍 **Use environment variables** for production deployments
+- 🔄 **Regularly rotate your API keys** for better security
+- 🛡️ The included `.gitignore` file helps prevent accidental commits
 
-2. **LEDs not blinking:**
-   - Verify GPIO pin connections
-   - Check resistor values (220Ω)
-   - Ensure proper LED polarity
+---
 
-3. **Weather data not loading:**
-   - Check internet connection
-   - Verify API key validity
-   - Check firewall settings
+## 🌐 API Usage
 
-4. **Font not loading:**
-   - Ensure font file is in `/usr/share/fonts/truetype/`
-   - Run `sudo fc-cache -fv` to refresh font cache
+This system uses these APIs:
+- **🌤️ OpenWeatherMap:** Current weather and 5-day forecast
+- **📍 IP-API:** Automatic location detection
+- **🏳️ FlagCDN:** Country flag images
 
-### Log Files
-- System logs: `sudo journalctl -u weather-display.service`
-- Application logs are printed to console with timestamps
+---
 
-## API Usage
+## 🤝 Contributing
 
-The system uses the following APIs:
-- **OpenWeatherMap**: Current weather and 5-day forecast
-- **IP-API**: Automatic location detection
-- **FlagCDN**: Country flag images
+We welcome contributions! Here's how you can help:
 
-## Performance
+1. 🍴 Fork the repository
+2. 🌿 Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. 💾 Commit your changes (`git commit -m 'Add amazing feature'`)
+4. 📤 Push to the branch (`git push origin feature/amazing-feature`)
+5. 🔄 Open a Pull Request
 
-- **Memory Usage**: ~50-100MB RAM
-- **CPU Usage**: <5% on Raspberry Pi 4
-- **Network Usage**: ~1MB per hour (with caching)
-- **Update Frequency**: Weather data every 5 minutes, display every 60 seconds
+---
 
-## Contributing
-
-Feel free to submit issues, fork the repository, and create pull requests for any improvements.
-
-## Security Notes
-
-- **Never commit API keys** to version control
-- **Keep your API key private** - don't share it publicly
-- **Use environment variables** for production deployments
-- **Regularly rotate your API keys** for better security
-- The included `.gitignore` file helps prevent accidental commits of sensitive files
-
-## License
+## 📄 License
 
 This project is open source. Please respect the terms of service of the APIs used.
 
-## Acknowledgments
+---
 
-- OpenWeatherMap for weather data API
-- Adafruit for the display libraries
-- FlagCDN for country flag images
-- Google Fonts for the Orbitron font family 
+## 🙏 Acknowledgments
+
+- 🌤️ **OpenWeatherMap** for weather data API
+- 🔧 **Adafruit** for the display libraries
+- 🏳️ **FlagCDN** for country flag images
+- 🔤 **Google Fonts** for the Orbitron font family
+
+---
+
+<div align="center">
+
+**⭐ If this project helped you, please give it a star! ⭐**
+
+Made with ❤️ for the Raspberry Pi community
+
+</div> 

@@ -79,7 +79,7 @@ install_system_dependencies() {
         "libfreetype6-dev"
         "liblcms2-dev"
         "libopenjp2-7"
-        "libtiff5"
+        "libtiff6"
     )
     
     for package in "${packages[@]}"; do
@@ -98,17 +98,34 @@ install_system_dependencies() {
 install_python_dependencies() {
     print_status "Installing Python dependencies..."
     
+    # First try to install system packages
+    local system_packages=(
+        "python3-requests"
+        "python3-pil"
+        "python3-rpi.gpio"
+    )
+    
+    for package in "${system_packages[@]}"; do
+        if ! dpkg -l | grep -q "^ii  $package "; then
+            print_status "Installing system package: $package"
+            sudo apt install -y "$package"
+        else
+            print_status "$package is already installed"
+        fi
+    done
+    
+    # Install Adafruit packages using pip with --break-system-packages
     local pip_packages=(
-        "requests"
-        "pillow"
         "adafruit-circuitpython-rgb-display"
-        "RPi.GPIO"
         "adafruit-blinka"
     )
     
     for package in "${pip_packages[@]}"; do
         print_status "Installing Python package: $package"
-        pip3 install --user "$package"
+        pip3 install --user --break-system-packages "$package" || {
+            print_warning "Failed to install $package with --user, trying with sudo..."
+            sudo pip3 install --break-system-packages "$package"
+        }
     done
     
     print_success "Python dependencies installed successfully"
