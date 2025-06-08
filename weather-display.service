@@ -6,8 +6,8 @@ Wants=network.target
 [Service]
 Type=simple
 User=pi
-WorkingDirectory=/home/pi
-ExecStart=/usr/bin/python3 /home/pi/system_controller.py
+WorkingDirectory=/home/pi/skyforge_project/
+ExecStart=/usr/bin/python3 /home/pi/skyforge_project/system_controller.py
 Restart=always
 RestartSec=10
 
