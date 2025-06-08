@@ -2,7 +2,28 @@
 
 > A beautiful, real-time weather display for your Raspberry Pi with ST7789 TFT screen and LED indicators
 
+## 📸 Project Demo
+
+<div align="center">
+
+### 🎬 System in Action
+![Weather Display Demo](Images/7.mp4)
+
+### 📱 Display Screenshots
+<img src="Images/2.jpg" alt="Weather Display Screen 1" width="300"/>
+<img src="Images/3.jpg" alt="Weather Display Screen 2" width="300"/>
+
+### 🔧 Hardware Setup
+![Hardware Setup Demo](Images/5.mp4)
+![LED Controller Demo](Images/6.mp4)
+![Complete System Demo](Images/9.mp4)
+
+</div>
+
+---
+
 ## 📖 Table of Contents
+- [📸 Project Demo](#-project-demo)
 - [✨ Features](#-features)
 - [🛠️ Hardware Requirements](#️-hardware-requirements)
 - [⚡ Quick Start](#-quick-start)
@@ -59,6 +80,11 @@
 | **🟢 Green LED** | Long leg → 220Ω → GPIO 17 (Pin 11)<br>Short leg → GND | GPIO 17 |
 | **🔴 Red LED** | Long leg → 220Ω → GPIO 27 (Pin 13)<br>Short leg → GND | GPIO 27 |
 
+<div align="center">
+<img src="Images/2.jpg" alt="Hardware Wiring Example" width="400"/>
+<p><em>Example of the completed hardware setup</em></p>
+</div>
+
 ---
 
 ## ⚡ Quick Start
@@ -84,6 +110,11 @@ chmod +x setup.sh && ./setup.sh
 - ✅ Starts the weather display service
 
 **🎉 That's it! Your weather display will be running automatically.**
+
+<div align="center">
+<img src="Images/3.jpg" alt="Final Result" width="400"/>
+<p><em>Your weather display system in action!</em></p>
+</div>
 
 ---
 
@@ -168,7 +199,14 @@ python3 led_controller.py
 ├── ⚙️ weather-display.service # Systemd service configuration
 ├── 🚀 setup.sh               # Automated installation script
 ├── 🛡️ .gitignore             # Git ignore file for security
-└── 📖 README.md              # This file
+├── 📖 README.md              # This file
+└── 📸 Images/                # Project photos and videos
+    ├── 2.jpg                 # Hardware setup photo
+    ├── 3.jpg                 # Display screenshot
+    ├── 5.mp4                 # Hardware demo video
+    ├── 6.mp4                 # LED controller demo
+    ├── 7.mp4                 # Weather display demo
+    └── 9.mp4                 # Complete system demo
 ```
 
 ---
